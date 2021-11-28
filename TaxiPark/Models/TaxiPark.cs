@@ -8,19 +8,25 @@ namespace TaxiPark.Models
 {
     public class TaxiPark
     {
+
         public string Name { get; set; }
         private readonly List<Car> Cars;
-
-        public TaxiPark(string name, List<Car> cars)
+        public double CostForPassengerCars { get; set; }
+        public double CostForCargoCars { get; set; }
+        public TaxiPark(string name, List<Car> cars,double costForCargoCars,double costForPassengerCars)
         {
             this.Name = name;
             this.Cars = cars;
+            this.CostForCargoCars = costForCargoCars;
+            this.CostForPassengerCars = costForPassengerCars;
         }
 
-        public TaxiPark()
+        public TaxiPark(double costForCargoCars, double costForPassengerCars)
         {
             this.Name = "Default";
             this.Cars = new List<Car>();
+            this.CostForCargoCars = costForCargoCars;
+            this.CostForPassengerCars = costForPassengerCars;
         }
 
         public int GetTotalAmountOfCarInTaxiPark => this.Cars.Count;
@@ -36,12 +42,26 @@ namespace TaxiPark.Models
 
         public void AddCar(Car car)
         {
+            if (car is CargoTaxi)
+            {
+                var cargoTaxi = (CargoTaxi) car;
+                cargoTaxi.CostForOneHourOfUse = this.CostForCargoCars;
+            }
+
+            if (car is PassengerTaxi)
+            {
+                var passengerTaxi = (PassengerTaxi) car;
+                passengerTaxi.CostForFiveKmTrip = this.CostForPassengerCars;
+            }
             this.Cars.Add(car);
         }
 
         public void AddCars(List<Car> cars)
         {
-            this.Cars.AddRange(cars);
+            foreach (var item in cars)
+            {
+                AddCar(item);
+            }
         }
 
         public Car FindCarById(int id)

@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaxiPark.CarBody;
+using TaxiPark.CarFuelType;
+using TaxiPark.CarTransmission;
 
 namespace TaxiPark.Models
 {
@@ -13,17 +16,10 @@ namespace TaxiPark.Models
         public int NumberOfPassenger { get; private set; }
         public double CostForFiveKmTrip { get; set; }
 
-        public PassengerTaxi():base()
+        public PassengerTaxi(int id,Brand brand, string registrationNumber, int yearOfIssue, int mileage,
+            double fuelConsumptionPerHundredKm, int numberOfPassenger, int speed, FuelType fuelType, Body body, Transmission transmission,Engine engine)
+            : base(id, brand, registrationNumber, yearOfIssue, mileage, fuelConsumptionPerHundredKm, speed, fuelType, body, transmission,engine)
         {
-            this.NumberOfPassenger = 4;
-            this.CostForFiveKmTrip = 3;
-        }
-
-        public PassengerTaxi(int id,string brand, string registrationNumber, int yearOfIssue, int mileage,
-            double fuelConsumptionPerHundredKm, int numberOfPassenger, double costForFiveKmTrip, int speed)
-            : base(id, brand, registrationNumber, yearOfIssue, mileage, fuelConsumptionPerHundredKm, speed)
-        {
-            this.CostForFiveKmTrip = costForFiveKmTrip;
             this.NumberOfPassenger = numberOfPassenger;
         }
 

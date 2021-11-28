@@ -5,28 +5,33 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using TaxiPark.CarBody;
+using TaxiPark.CarFuelType;
+using TaxiPark.CarTransmission;
 
 namespace TaxiPark.Models
 {
     public abstract class Car
     {
       
-        public int Id { get; set; }
-
-        [StringLength(20, MinimumLength = 1)]
-        public string Brand { get; private set; }
+        public int Id { get; private set; }
+        public Brand Brand { get; private set; }
         public string RegistrationNumber { get; set; }
-
+        public FuelType FuelType { get; set; }
         [Range(1920,2021,ErrorMessage = "Invalid year of issue!(must be between 1920 to 2021)")]
         public int YearOfIssue { get; private set; }
         public int Mileage { get; set; }
         public double FuelConsumptionPerHundredKm { get; private set; }
+        public Body Body { get; private  set; }
 
         [Range(10,200,ErrorMessage = "Not valid speed!")]
         public int Speed { get; private set; }
+        public Transmission Transmission { get; private set; }
 
-        protected Car(int id, string brand, string registrationNumber, int yearOfIssue, int mileage,
-            double fuelConsumptionPerHundredKm, int speed)
+        public Engine Engine { get; private set; }
+
+        public  Car(int id, Brand brand, string registrationNumber, int yearOfIssue, int mileage,
+            double fuelConsumptionPerHundredKm, int speed,FuelType fuelType, Body body, Transmission transmission,Engine engine)
         {
             this.Id = id;
             this.Brand = brand;
@@ -35,17 +40,10 @@ namespace TaxiPark.Models
             this.Mileage = mileage;
             this.FuelConsumptionPerHundredKm = fuelConsumptionPerHundredKm;
             this.Speed = speed;
-        }
-
-        protected Car()
-        {  
-            this.Id = new Random().Next();
-            this.Brand = "Citroen";
-            this.RegistrationNumber = $"{GenerateRegistrationNumber()}";
-            this.YearOfIssue = 2010;
-            this.Mileage = 155000;
-            this.Speed = 70;
-            this.FuelConsumptionPerHundredKm = 7.1;
+            this.FuelType = fuelType;
+            this.Body = body;
+            this.Transmission = transmission;
+            this.Engine = engine;
         }
 
         public virtual void PrintInfo()

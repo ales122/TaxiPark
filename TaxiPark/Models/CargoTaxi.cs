@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaxiPark.CarBody;
+using TaxiPark.CarFuelType;
+using TaxiPark.CarTransmission;
 
 namespace TaxiPark.Models
 {
@@ -13,17 +16,12 @@ namespace TaxiPark.Models
         public int CarryingCapacity { get; private set; }
 
         public double CostForOneHourOfUse { get; set; }
-        public CargoTaxi():base()
-        {
-            this.CarryingCapacity = 1000;
-            this.CostForOneHourOfUse = 5.5;
-        }
-        public CargoTaxi(int id,string brand, string registrationNumber, int yearOfIssue, int mileage,
-            double fuelConsumptionPerHundredKm, int carryingCapacity, double costForOneHourOfUse, int speed)
-            : base(id, brand, registrationNumber, yearOfIssue, mileage, fuelConsumptionPerHundredKm, speed)
+
+        public CargoTaxi(int id,Brand brand, string registrationNumber, int yearOfIssue, int mileage,
+            double fuelConsumptionPerHundredKm, int carryingCapacity, int speed, FuelType fuelType, Body body, Transmission transmission,Engine engine)
+            : base(id, brand, registrationNumber, yearOfIssue, mileage, fuelConsumptionPerHundredKm, speed,fuelType,body,transmission,engine)
         {
             this.CarryingCapacity = carryingCapacity;
-            this.CostForOneHourOfUse = costForOneHourOfUse;
         }
 
         public override void PrintInfo()
